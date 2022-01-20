@@ -246,6 +246,8 @@ dockerx:
 	echo "istio-docker.mk: DOCKERX_PUSH="$(DOCKERX_PUSH)
 	echo "istio-docker.mk: HUB="$(HUB)
 	echo "istio-docker.mk: HUBS="$(HUBS)
+	echo "istio-docker.mk: Now check docker is running: ttttttttttttttt"
+	docker ps -a
 	./tools/docker --push=$(or $(DOCKERX_PUSH),$(DOCKERX_PUSH),false)
 else
 dockerx: DOCKER_RULE?=mkdir -p $(DOCKERX_BUILD_TOP)/$@ && TARGET_ARCH=$(TARGET_ARCH) ./tools/docker-copy.sh $^ $(DOCKERX_BUILD_TOP)/$@ && cd $(DOCKERX_BUILD_TOP)/$@ $(BUILD_PRE)
