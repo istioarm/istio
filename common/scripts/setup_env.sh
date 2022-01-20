@@ -23,6 +23,8 @@
 
 set -e
 
+sudo chown -R prow ~/.config
+
 LOCAL_ARCH=$(uname -m)
 export LOCAL_ARCH
 # Pass environment set target architecture to build system
