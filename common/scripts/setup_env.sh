@@ -23,6 +23,7 @@
 
 set -e
 
+echo "HOME is : aaaaaaaaaaa: "${HOME}
 sudo chown -R prow ~/
 
 LOCAL_ARCH=$(uname -m)
