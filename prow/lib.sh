@@ -111,6 +111,11 @@ function build_images() {
   fi
   targets+="docker.operator "
   targets+="docker.install-cni "
+  printdir=`ls -la ~/`
+  echo "lib.sh: ttttttttttttt:"
+  echo $printdir
+  echo "User is:"$USER
+  
   if [[ "${VARIANT:-default}" == "distroless" ]]; then
     DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
     DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" make dockerx.pushx
