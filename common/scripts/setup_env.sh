@@ -23,7 +23,7 @@
 
 set -e
 
-sudo chown -R prow ~/.config
+sudo chown -R prow ~/
 
 LOCAL_ARCH=$(uname -m)
 export LOCAL_ARCH
