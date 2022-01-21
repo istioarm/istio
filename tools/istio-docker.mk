@@ -247,6 +247,8 @@ dockerx:
 	echo "istio-docker.mk: HUB="$(HUB)
 	echo "istio-docker.mk: HUBS="$(HUBS)
 	echo "istio-docker.mk: Now check docker is running: ttttttttttttttt"
+	echo "ENV eeeeee"
+	env
 	docker ps -a
 	./tools/docker --push=$(or $(DOCKERX_PUSH),$(DOCKERX_PUSH),false)
 else
