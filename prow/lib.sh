@@ -92,7 +92,10 @@ function buildx-create() {
     # Pre-warm the builder. If it fails, fetch logs, but continue
     docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
     ls -la /home
-    ls -la /home/.config
+    ls -la /home/.config    || true
+    ls -la /home/.config/gcloud || true
+    ls -la /home/.config/gcloud/configurations || true
+    ls -la /home/.config/gcloud/configuration/config_default || true
   fi
   docker buildx use container-builder
 }
