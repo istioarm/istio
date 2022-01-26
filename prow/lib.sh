@@ -96,6 +96,7 @@ function buildx-create() {
     ls -la /home/.config/gcloud || true
     ls -la /home/.config/gcloud/configurations || true
     ls -la /home/.config/gcloud/configuration/config_default || true
+    cat ~/.docker/config.json || true
   fi
   docker buildx use container-builder
 }
