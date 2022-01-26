@@ -98,6 +98,8 @@ function buildx-create() {
     ls -la /home/.config/gcloud/configuration/config_default || true
     cat ~/.docker/config.json || true
     whoami || true
+    echo "HOME is:"$HOME
+    echo "ROOT is:"$ROOT
   fi
   docker buildx use container-builder
 }
