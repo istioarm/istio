@@ -126,6 +126,8 @@ function build_images() {
   echo $printdir
   echo "User is:"$USER
   
+  env
+  
   if [[ "${VARIANT:-default}" == "distroless" ]]; then
     DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
     DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" make dockerx.pushx
