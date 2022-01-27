@@ -87,11 +87,6 @@ function download_untar_istio_release() {
 
 function buildx-create() {
   export DOCKER_CLI_EXPERIMENTAL=enabled
-  if ! docker buildx ls | grep -q container-builder; then
-    docker buildx create --driver-opt network=host,image=gcr.io/istio-testing/buildkit:v0.9.2 --name container-builder --buildkitd-flags="--debug"
-    # Pre-warm the builder. If it fails, fetch logs, but continue
-    docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
-    docker buildx ls
     ls -la /home
     ls -la /home/.config    || true
     ls -la /home/.config/gcloud || true
@@ -101,6 +96,11 @@ function buildx-create() {
     whoami || true
     echo "HOME is:"$HOME
     echo "ROOT is:"$ROOT
+    docker buildx ls | grep container-builder
+  if ! docker buildx ls | grep -q container-builder; then
+    docker buildx create --driver-opt network=host,image=gcr.io/istio-testing/buildkit:v0.9.2 --name container-builder --buildkitd-flags="--debug"
+    # Pre-warm the builder. If it fails, fetch logs, but continue
+    docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
   fi
   docker buildx use container-builder
 }
