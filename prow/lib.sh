@@ -96,6 +96,7 @@ function buildx-create() {
     whoami || true
     echo "HOME is:"$HOME
     echo "ROOT is:"$ROOT
+    env || true
     docker buildx ls | grep container-builder
   if ! docker buildx ls | grep -q container-builder; then
     docker buildx create --driver-opt network=host,image=gcr.io/istio-testing/buildkit:v0.9.2 --name container-builder --buildkitd-flags="--debug"
