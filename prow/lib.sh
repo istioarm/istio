@@ -125,7 +125,6 @@ function build_images() {
   printdir=`ls -la ~/`
   echo "lib.sh: ttttttttttttt:"
   echo $printdir
-  echo "User is:"$USER
   
   echo $(env)
   
