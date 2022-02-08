@@ -45,7 +45,8 @@ function setup_gcloud_credentials() {
     gcloud auth configure-docker -q
     #echo "Not configure gcloud auth configure-docker -q"
   elif [[ $(command -v docker-credential-gcr) ]]; then
-    docker-credential-gcr configure-docker
+    #docker-credential-gcr configure-docker
+    echo "Not configure docker-credential-gcr configure-docker"
   else
     echo "No credential helpers found, push to docker may not function properly"
   fi
