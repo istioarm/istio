@@ -139,10 +139,10 @@ function build_images() {
      aarch64_bin=$(file out/linux_arm64/release/envoy | grep aarch64) || true
      if [ -z "${aarch64_bin}" ]; then
        pushd proxy
-       # BUILD_WITH_CONTAINER=1 make build
-       # BUILD_WITH_CONTAINER=1 make exportcache
-       make build
-       make exportcache
+       BUILD_WITH_CONTAINER=1 make build
+       BUILD_WITH_CONTAINER=1 make exportcache
+       #make build
+       #make exportcache
        popd
        mkdir -p out/linux_arm64/release
        cp proxy/out/linux_arm64/envoy out/linux_arm64/release
