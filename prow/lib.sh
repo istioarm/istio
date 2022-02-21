@@ -126,6 +126,31 @@ function build_images() {
      export TARGET_ARCH=amd64
   fi
 
+ # For arm64, we need to build Envoy and install envoy
+  if [[ "$(uname -m)" == "aarch64" ]]; then
+     echo "Now build envoy arm64 binary: DDDDDDDDDDDDDDDDDDDD"
+     export PROXY_REPO_SHA=$(cat ./istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
+     echo $PROXY_REPO_SHA
+     git clone https://github.com/istio/proxy.git
+     pushd proxy
+     git checkout $PROXY_REPO_SHA
+     popd
+
+     aarch64_bin=$(file out/linux_arm64/release/envoy | grep aarch64) || true
+     if [ -z "${aarch64_bin}" ]; then
+       pushd proxy
+       # BUILD_WITH_CONTAINER=1 make build
+       # BUILD_WITH_CONTAINER=1 make exportcache
+       make build
+       make exportcache
+       popd
+       mkdir -p out/linux_arm64/release
+       cp proxy/out/linux_arm64/envoy out/linux_arm64/release
+     fi
+     echo "Now build envoy arm64 binary ok: EEEEEEEEEEEEEEEEEEEEE"
+  fi
+
+
   # For arm64, we need to build the base image by ourselves
   if [[ "$(uname -m)" == "aarch64" ]]; then
      echo "Now build the base images for arm64 platform: AAAAAAAAAAAAAAAAAAAAAAAAAAA"
