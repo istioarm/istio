@@ -120,7 +120,9 @@ function build_images() {
   if [[ "$(uname -m)" == "aarch64" ]]; then
      echo "TARGETARCH = arm64"
      export TARGETARCH="arm64"
-     export TARGET_ARCH="arm64"
+     export TARGET_ARCH=arm64
+  else
+     export TARGET_ARCH=amd64
   fi
 
 
@@ -147,10 +149,10 @@ function build_images() {
   echo $(env)
   
   if [[ "${VARIANT:-default}" == "distroless" ]]; then
-    DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
-    DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" make dockerx.pushx
+    DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+    DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
   else
-    DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" make dockerx.pushx
+    DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
   fi
 }
 
