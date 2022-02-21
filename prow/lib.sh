@@ -126,6 +126,13 @@ function build_images() {
      export TARGET_ARCH=amd64
   fi
 
+  # For arm64, we need to build the base image by ourselves
+  if [[ "$(uname -m)" == "aarch64" ]]; then
+     echo "Now build the base images for arm64 platform: AAAAAAAAAAAAAAAAAAAAAAAAAAA"
+     DOCKER_TARGETS='docker.base docker.distroless' \
+         HUBS="gcr.io/istio-release" TARGET_ARCH="arm64" make docker
+  fi
+
 
   # use ubuntu:bionic to test vms by default
   nonDistrolessTargets="docker.app docker.app_sidecar_ubuntu_bionic "
@@ -150,9 +157,11 @@ function build_images() {
   echo $(env)
   
   if [[ "${VARIANT:-default}" == "distroless" ]]; then
+    echo "Now build the base images distroless for arm64 platform: BBBBBBBBBBBBBBBBBBBBBBBBB"
     DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
     DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
   else
+    echo "Now build the base images for arm64 platform: CCCCCCC"
     DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
   fi
 }
