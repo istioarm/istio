@@ -38,6 +38,13 @@ source "${ROOT}/common/scripts/kind_provisioner.sh"
 
 TOPOLOGY=SINGLE_CLUSTER
 NODE_IMAGE="gcr.io/istio-testing/kind-node:v1.23.0"
+
+if [[ "$(uname -m)" == "aarch64" ]]; then
+        echo "this is aarch64 platform, uses kindest/node:v1.23.0"
+        NODE_IMAGE="kindest/node:v1.23.0"
+fi
+
+
 KIND_CONFIG=""
 CLUSTER_TOPOLOGY_CONFIG_FILE="${ROOT}/prow/config/topology/multicluster.json"
 
