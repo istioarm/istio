@@ -120,6 +120,7 @@ function build_images() {
   if [[ "$(uname -m)" == "aarch64" ]]; then
      echo "TARGETARCH = arm64"
      export TARGETARCH="arm64"
+     export TARGET_ARCH="arm64"
   fi
 
 
