@@ -121,6 +121,7 @@ function build_images() {
      echo "TARGETARCH = arm64"
      export TARGETARCH="arm64"
      export TARGET_ARCH=arm64
+     export DOCKER_ARCHITECTURES=linux/arm64
   else
      export TARGET_ARCH=amd64
   fi
