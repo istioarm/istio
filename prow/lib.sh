@@ -106,7 +106,7 @@ function buildx-create() {
     # Pre-warm the builder. If it fails, fetch logs, but continue
     docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
   fi
-  docker buildx use container-builder  export TARGETARCH="arm64"
+  docker buildx use container-builder
 }
 
 function build_images() {
