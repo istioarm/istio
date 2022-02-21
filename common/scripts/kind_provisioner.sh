@@ -34,6 +34,12 @@ set -x
 # DEFAULT_KIND_IMAGE is used to set the Kubernetes version for KinD unless overridden in params to setup_kind_cluster(s)
 DEFAULT_KIND_IMAGE="gcr.io/istio-testing/kindest/node:v1.19.1"
 
+if [[ "$(uname -m)" == "aarch64" ]]; then
+        echo "this is aarch64 platform, uses kindest/node:v1.19.11"
+        DEFAULT_KIND_IMAGE="kindest/node:v1.19.11"
+fi
+
+
 # COMMON_SCRIPTS contains the directory this file is in.
 COMMON_SCRIPTS=$(dirname "${BASH_SOURCE:-$0}")
 
