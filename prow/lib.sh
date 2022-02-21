@@ -124,7 +124,7 @@ function build_images() {
   if [[ "$(uname -m)" == "aarch64" ]]; then
      echo "this is aarch64 platform, choose docker.app"
      nonDistrolessTargets="docker.app "
-  elif [[ "${SELECT_TEST}" == "test.integration.pilot.kube" &&  ]]; then
+  elif [[ "${SELECT_TEST}" == "test.integration.pilot.kube" ]]; then
     #  if [[ "${SELECT_TEST}" == "test.integration.pilot.kube" &&  ]]; then
     nonDistrolessTargets+="docker.app_sidecar_ubuntu_xenial docker.app_sidecar_ubuntu_focal docker.app_sidecar_ubuntu_bionic "
     nonDistrolessTargets+="docker.app_sidecar_debian_9 docker.app_sidecar_debian_10 docker.app_sidecar_centos_7 docker.app_sidecar_centos_8 "
