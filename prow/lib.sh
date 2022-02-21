@@ -106,7 +106,8 @@ function buildx-create() {
     # Pre-warm the builder. If it fails, fetch logs, but continue
     docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
   fi
-  docker buildx use container-builder
+  if 
+  docker buildx use container-builder  export TARGETARCH="arm64"
 }
 
 function build_images() {
@@ -116,6 +117,12 @@ function build_images() {
 
   # Build just the images needed for tests
   targets="docker.pilot docker.proxyv2 "
+  
+  if [[ "$(uname -m)" == "aarch64" ]]; then
+     echo "TARGETARCH = arm64"
+     export TARGETARCH="arm64"
+  fi
+
 
   # use ubuntu:bionic to test vms by default
   nonDistrolessTargets="docker.app docker.app_sidecar_ubuntu_bionic "
