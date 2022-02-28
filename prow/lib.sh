@@ -142,6 +142,7 @@ function build_images() {
      tar xvf envoy.tar.gz -C out/linux_arm64/release
      chmod +x out/linux_arm64/release/envoy
      cp out/linux_arm64/release/envoy out/linux_arm64
+     chmod +w out/linux_arm64/envoy
   fi
 
 
