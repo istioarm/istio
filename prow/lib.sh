@@ -148,8 +148,10 @@ function build_images() {
      aarch64_bin=$(file out/linux_arm64/release/envoy | grep aarch64) || true
      if [ -z "${aarch64_bin}" ]; then
        pushd proxy
-       BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make build
-       BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make exportcache
+       #BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make build
+       #BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make exportcache
+       BUILD_WITH_CONTAINER=1 IMG=iecedge/istio-build-tools-proxy:master-latest make build
+       BUILD_WITH_CONTAINER=1 IMG=iecedge/istio-build-tools-proxy:master-latest make exportcache       
        #make build
        #make exportcache
        popd
