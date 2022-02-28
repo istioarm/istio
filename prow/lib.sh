@@ -138,7 +138,7 @@ function build_images() {
      #docker images | grep "build-tools"
      docker images     
      
-     <<COMMENT
+     :<<COMMENT
      echo "Now build envoy arm64 binary: DDDDDDDDDDDDDDDDDDDD"
      export PROXY_REPO_SHA=$(cat ./istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
      echo $PROXY_REPO_SHA
