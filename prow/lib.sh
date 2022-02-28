@@ -101,12 +101,18 @@ function buildx-create() {
     echo "HOME is:"$HOME
     echo "ROOT is:"$ROOT
     env || true
+  buildkit_img=gcr.io/istio-testing/buildkit:v0.9.2
+  if [[ "$(uname -m)" == "aarch64" ]]; then
+    buildkit_img=moby/buildkit:v0.9.2
+  fi
   if ! docker buildx ls | grep -q container-builder; then
-    docker buildx create --driver-opt network=host,image=gcr.io/istio-testing/buildkit:v0.9.2 --name container-builder --buildkitd-flags="--debug"
+    docker buildx create --driver-opt network=host,image=${buildkit_img} --name container-builder --buildkitd-flags="--debug"      
     # Pre-warm the builder. If it fails, fetch logs, but continue
     docker buildx inspect --bootstrap container-builder || docker logs buildx_buildkit_container-builder0 || true
   fi
   docker buildx use container-builder
+  echo "Now show docker buildx: XXXXXXXXXXXXXXXXXXXXXXX"
+  docker buildx ls
 }
 
 function build_images() {
