@@ -23,9 +23,15 @@ set -eu;
 
 function may_copy_into_arch_named_sub_dir() {
   FILE=${1}
+  
+  echo "FILE is: "${FILE}
+  
   COPY_ARCH_RELATED=${COPY_ARCH_RELATED:-1}
 
   FILE_INFO=$(file "${FILE}" || true)
+  
+  echo "FILE_INFO is: "${FILE_INFO}
+  
   # when file is an `ELF 64-bit LSB`,
   # will put an arch named sub dir
   # like
@@ -33,12 +39,16 @@ function may_copy_into_arch_named_sub_dir() {
   #   amd64/
   if [[ ${FILE_INFO} == *"ELF 64-bit LSB"* ]]; then
     chmod 755 "${FILE}"
+    
+    echo "DOCKER_WORKING_DIR is:" ${DOCKER_WORKING_DIR}
 
     case ${FILE_INFO} in
       *x86-64*)
+        echo "Now FILE is of amd64 type ...................."
         mkdir -p "${DOCKER_WORKING_DIR}/amd64/" && cp -rp "${FILE}" "${DOCKER_WORKING_DIR}/amd64/"
         ;;
       *aarch64*)
+        echo "Now FILE is of aarch64 type ...................."
         mkdir -p "${DOCKER_WORKING_DIR}/arm64/" && cp -rp "${FILE}" "${DOCKER_WORKING_DIR}/arm64/"
         ;;
       *)
@@ -49,11 +59,14 @@ function may_copy_into_arch_named_sub_dir() {
 
     if [[ ${COPY_ARCH_RELATED} == 1 ]]; then
       # if other arch files exists, should copy too.
+      
       for ARCH in "amd64" "arm64"; do
         # like file `out/linux_amd64/pilot-discovery`
         # should check  `out/linux_arm64/pilot-discovery` exists then do copy
 
         FILE_ARCH_RELATED=${FILE/linux_${TARGET_ARCH}/linux_${ARCH}}
+        
+        echo "FILE_ARCH_RELATED is:" ${FILE_ARCH_RELATED}
 
         if [[ ${FILE_ARCH_RELATED} != "${FILE}" && -f ${FILE_ARCH_RELATED} ]]; then
           COPY_ARCH_RELATED=0 may_copy_into_arch_named_sub_dir "${FILE_ARCH_RELATED}"
@@ -62,6 +75,7 @@ function may_copy_into_arch_named_sub_dir() {
     fi
 
   else
+    echo "Not ELF, just copy to working dir"
     cp -rp "${FILE}" "${DOCKER_WORKING_DIR}"
   fi
 }
