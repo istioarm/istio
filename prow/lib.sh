@@ -135,8 +135,8 @@ function build_images() {
  # For arm64, we need to build Envoy and install envoy
   if [[ "$(uname -m)" == "aarch64" ]]; then
      echo "Now check image build-tools-proxy:"
-     docker images | grep "build-tools"
-     
+     #docker images | grep "build-tools"
+     docker images     
      echo "Now build envoy arm64 binary: DDDDDDDDDDDDDDDDDDDD"
      export PROXY_REPO_SHA=$(cat ./istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
      echo $PROXY_REPO_SHA
