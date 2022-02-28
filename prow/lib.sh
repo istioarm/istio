@@ -143,6 +143,10 @@ function build_images() {
      chmod +x out/linux_arm64/release/envoy
      cp out/linux_arm64/release/envoy out/linux_arm64
      chmod +w out/linux_arm64/envoy
+     pwd
+     echo "TARGET_OUT_LINUX:"${TARGET_OUT_LINUX}
+     echo "ISTIO_ENVOY_LINUX_RELEASE_DIR:"${ISTIO_ENVOY_LINUX_RELEASE_DIR}
+     ls ${ISTIO_ENVOY_LINUX_RELEASE_DIR} -l
   fi
 
 
