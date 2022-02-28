@@ -81,6 +81,7 @@ function may_copy_into_arch_named_sub_dir() {
 }
 
 mkdir -p "${DOCKER_WORKING_DIR}"
+echo "DOCKER_WORKING_DIR is:"${DOCKER_WORKING_DIR}
 for FILE in "${FILES[@]}"; do
   may_copy_into_arch_named_sub_dir "${FILE}"
 done
