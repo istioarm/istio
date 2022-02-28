@@ -137,6 +137,8 @@ function build_images() {
      echo "Now check image build-tools-proxy:"
      #docker images | grep "build-tools"
      docker images     
+     
+     <<COMMENT
      echo "Now build envoy arm64 binary: DDDDDDDDDDDDDDDDDDDD"
      export PROXY_REPO_SHA=$(cat ./istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
      echo $PROXY_REPO_SHA
@@ -144,14 +146,13 @@ function build_images() {
      pushd proxy
      git checkout $PROXY_REPO_SHA
      popd
-
      aarch64_bin=$(file out/linux_arm64/release/envoy | grep aarch64) || true
      if [ -z "${aarch64_bin}" ]; then
        pushd proxy
        #BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make build
        #BUILD_WITH_CONTAINER=1 IMAGE_VERSION=master-latest make exportcache
        BUILD_WITH_CONTAINER=1 IMG=iecedge/istio-build-tools-proxy:master-latest make build
-       BUILD_WITH_CONTAINER=1 IMG=iecedge/istio-build-tools-proxy:master-latest make exportcache       
+       BUILD_WITH_CONTAINER=1 IMG=iecedge/istio-build-tools-proxy:master-latest make exportcache
        #make build
        #make exportcache
        popd
@@ -159,6 +160,12 @@ function build_images() {
        cp proxy/out/linux_arm64/envoy out/linux_arm64/release
      fi
      echo "Now build envoy arm64 binary ok: EEEEEEEEEEEEEEEEEEEEE"
+     
+     COMMENT
+     
+     echo "Now copy the envoy arm64 binary to release:"
+     mkdir -p out/linux_arm64/release
+     tar xvf envoy.tar.gz -C out/linux_arm64/release
   fi
 
 
