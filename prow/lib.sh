@@ -142,12 +142,13 @@ function build_images() {
      tar xvf envoy.tar.gz -C out/linux_arm64/release
      chmod +x out/linux_arm64/release/envoy
      cp out/linux_arm64/release/envoy out/linux_arm64
+     #cp out/linux_arm64/release/envoy .
      chmod +w out/linux_arm64/envoy
      pwd
      ls -l out/linux_arm64/envoy
-     echo "TARGET_OUT_LINUX:"${TARGET_OUT_LINUX}
-     echo "ISTIO_ENVOY_LINUX_RELEASE_DIR:"${ISTIO_ENVOY_LINUX_RELEASE_DIR}
-     ls -l ${ISTIO_ENVOY_LINUX_RELEASE_DIR}
+     #echo "TARGET_OUT_LINUX:"${TARGET_OUT_LINUX} || true
+     #echo "ISTIO_ENVOY_LINUX_RELEASE_DIR:"${ISTIO_ENVOY_LINUX_RELEASE_DIR} || true
+     #ls -l ${ISTIO_ENVOY_LINUX_RELEASE_DIR}  || true
   fi
 
 
@@ -183,11 +184,20 @@ function build_images() {
   
   if [[ "${VARIANT:-default}" == "distroless" ]]; then
     echo "Now build the base images distroless for arm64 platform: BBBBBBBBBBBBBBBBBBBBBBBBB"
-    DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
-    DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+    if [[ "$(uname -m)" == "aarch64" ]]; then
+      DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+      DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+    else
+      DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
+      DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" make dockerx.pushx
+    fi
   else
     echo "Now build the base images for arm64 platform: CCCCCCC"
-    DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+    if [[ "$(uname -m)" == "aarch64" ]]; then
+      DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" ISTIO_ENVOY_LOCAL=out/linux_arm64/envoy TARGET_ARCH=${TARGET_ARCH} make dockerx.pushx
+    else
+      DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" make dockerx.pushx
+    fi
   fi
 }
 
