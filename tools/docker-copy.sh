@@ -75,7 +75,7 @@ function may_copy_into_arch_named_sub_dir() {
     fi
 
   else
-    echo "Not ELF, just copy to working dir"
+    echo "FILE is Not ELF, just copy to working dir: "${FILE}
     cp -rp "${FILE}" "${DOCKER_WORKING_DIR}"
   fi
 }
