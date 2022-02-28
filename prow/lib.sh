@@ -140,6 +140,8 @@ function build_images() {
      echo "Now copy the envoy arm64 binary to release:"
      mkdir -p out/linux_arm64/release
      tar xvf envoy.tar.gz -C out/linux_arm64/release
+     chmod +x out/linux_arm64/release/envoy
+     cp out/linux_arm64/release/envoy out/linux_arm64
   fi
 
 
