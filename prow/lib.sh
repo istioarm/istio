@@ -204,7 +204,7 @@ function setup_kind_registry() {
   # create a registry container if it not running already
   running="$(docker inspect -f '{{.State.Running}}' "${KIND_REGISTRY_NAME}" 2>/dev/null || true)"
   registry_img=gcr.io/istio-testing/registry:2
-  [[ "$(uname -m)" == "aarch64" ]] && registry_img=moby/buildkit:v0.9.2
+  [[ "$(uname -m)" == "aarch64" ]] && registry_img=registry:2
   if [[ "${running}" != 'true' ]]; then
       docker run \
         -d --restart=always -p "${KIND_REGISTRY_PORT}:5000" --name "${KIND_REGISTRY_NAME}" \
