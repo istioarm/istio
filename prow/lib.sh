@@ -102,9 +102,7 @@ function buildx-create() {
     echo "ROOT is:"$ROOT
     env || true
   buildkit_img=gcr.io/istio-testing/buildkit:v0.9.2
-  if [[ "$(uname -m)" == "aarch64" ]]; then
-    buildkit_img=moby/buildkit:v0.9.2
-  fi
+  [[ "$(uname -m)" == "aarch64" ]] && buildkit_img=moby/buildkit:v0.9.2
   if ! docker buildx ls | grep -q container-builder; then
     docker buildx create --driver-opt network=host,image=${buildkit_img} --name container-builder --buildkitd-flags="--debug"      
     # Pre-warm the builder. If it fails, fetch logs, but continue
@@ -206,9 +204,7 @@ function setup_kind_registry() {
   # create a registry container if it not running already
   running="$(docker inspect -f '{{.State.Running}}' "${KIND_REGISTRY_NAME}" 2>/dev/null || true)"
   registry_img=gcr.io/istio-testing/registry:2
-  if [[ "$(uname -m)" == "aarch64" ]]; then
-    registry_img=registry:2
-  fi
+  [[ "$(uname -m)" == "aarch64" ]] && registry_img=moby/buildkit:v0.9.2
   if [[ "${running}" != 'true' ]]; then
       docker run \
         -d --restart=always -p "${KIND_REGISTRY_PORT}:5000" --name "${KIND_REGISTRY_NAME}" \
