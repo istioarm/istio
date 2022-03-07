@@ -37,9 +37,11 @@ setup_and_export_git_sha
 source "${ROOT}/common/scripts/kind_provisioner.sh"
 
 TOPOLOGY=SINGLE_CLUSTER
-NODE_IMAGE="gcr.io/istio-testing/kind-node:v1.23.0"
+#NODE_IMAGE="gcr.io/istio-testing/kind-node:v1.23.0"
+NODE_IMAGE="gcr.io/istio-testing/kind-node:v1.23.4"
 
-[[ "$(uname -m)" == "aarch64" ]] && NODE_IMAGE="kindest/node:v1.23.0"
+
+#[[ "$(uname -m)" == "aarch64" ]] && NODE_IMAGE="kindest/node:v1.23.0"
 
 KIND_CONFIG=""
 CLUSTER_TOPOLOGY_CONFIG_FILE="${ROOT}/prow/config/topology/multicluster.json"
