@@ -16,10 +16,14 @@
 
 # Note: Experimental only for the use of building your own on arm64 platform
 
+WD=$(dirname "$0")
+WD=$(cd "$WD"; pwd)
+ROOT=$(dirname "$WD")
+
 set -ex
 
-source lib.sh
-
+# shellcheck source=prow/lib.sh
+source "${ROOT}/prow/lib.sh"
 
 CURR_DIR=$(dirname "${BASH_SOURCE[0]}")
 O_HUB=${1:-istio}
