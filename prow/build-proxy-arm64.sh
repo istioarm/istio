@@ -78,7 +78,7 @@ if [ -z "${aarch64_bin}" ]; then
     #cp ${CURR_DIR}/proxy/out/linux_arm64/envoy ${CURR_DIR}/out/linux_arm64/release
     cp ${ROOT}/proxy/bazel-bin/src/envoy/envoy ${ROOT}/out/linux_arm64/release
     chmod +w ${ROOT}/out/linux_arm64/release/envoy
-    cp -a ${ROOT}/proxy/bazel-bin/**/*wasm ${ROOT}/out/linux_arm64/release
+    #cp -a ${ROOT}/proxy/bazel-bin/**/*wasm ${ROOT}/out/linux_arm64/release
 fi
 
 
