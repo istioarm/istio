@@ -44,9 +44,9 @@ fi
 #popd
 
 # Build Istio binary
-pushd ${CURR_DIR}/istio
-TARGET_ARCH=arm64 IMAGE_VERSION=master-latest make build
-popd
+#pushd ${CURR_DIR}/istio
+#TARGET_ARCH=arm64 IMAGE_VERSION=master-latest make build
+#popd
 
 
 export IMAGE_TAG=master-latest
