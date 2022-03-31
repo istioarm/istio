@@ -72,10 +72,13 @@ if [ -z "${aarch64_bin}" ]; then
     #BUILD_WITH_CONTAINER=1 make build
     #BUILD_WITH_CONTAINER=1 make exportcache
     make build
-    make exportcache
+    #make exportcache
     popd
-    mkdir -p ${CURR_DIR}/out/linux_arm64/release
-    cp ${CURR_DIR}/proxy/out/linux_arm64/envoy ${CURR_DIR}/out/linux_arm64/release
+    mkdir -p ${ROOT}/out/linux_arm64/release
+    #cp ${CURR_DIR}/proxy/out/linux_arm64/envoy ${CURR_DIR}/out/linux_arm64/release
+    cp ${ROOT}/proxy/bazel-bin/src/envoy/envoy ${ROOT}/out/linux_arm64/release
+    chmod +w ${ROOT}/out/linux_arm64/release/envoy
+    cp -a ${ROOT}/proxy/bazel-bin/**/*wasm ${ROOT}/out/linux_arm64/release
 fi
 
 
