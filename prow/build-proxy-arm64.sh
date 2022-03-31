@@ -32,7 +32,8 @@ if [ ! -d ${CURR_DIR}/proxy ]; then
     #git clone https://github.com/istio/istio.git &&
     #git clone https://github.com/istio/proxy.git &&
     #git clone https://github.com/istio/tools.git
-    git clone https://github.com/istio/proxy.git &&
+    #git clone https://github.com/istioarm/istio.git
+    git clone https://github.com/istio/proxy.git
 fi
 
 # Build build-tools and build-tools-proxy
