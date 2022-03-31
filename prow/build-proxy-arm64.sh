@@ -25,10 +25,10 @@ set -ex
 # shellcheck source=prow/lib.sh
 source "${ROOT}/prow/lib.sh"
 
-CURR_DIR=$(dirname "${BASH_SOURCE[0]}")
+#CURR_DIR=$(dirname "${BASH_SOURCE[0]}")
 O_HUB=${1:-istio}
 
-if [ ! -d ${CURR_DIR}/proxy ]; then
+if [ ! -d ${ROOT}/proxy ]; then
     #git clone https://github.com/istio/istio.git &&
     #git clone https://github.com/istio/proxy.git &&
     #git clone https://github.com/istio/tools.git
@@ -37,14 +37,14 @@ if [ ! -d ${CURR_DIR}/proxy ]; then
 fi
 
 # Build build-tools and build-tools-proxy
-#pushd ${CURR_DIR}/tools/docker/build-tools
+#pushd ${ROOT}/tools/docker/build-tools
 #if [ -z "$(docker images |grep "build-tools-proxy" | grep "master-latest")" ]; then
 #    DRY_RUN=1 time ./build-and-push.sh
 #fi
 #popd
 
 # Build Istio binary
-#pushd ${CURR_DIR}/istio
+#pushd ${ROOT}/istio
 #TARGET_ARCH=arm64 IMAGE_VERSION=master-latest make build
 #popd
 
@@ -59,8 +59,8 @@ export TARGET_ARCH=arm64
 export CI=true
 
 # Build Envoy and install envoy
-export PROXY_REPO_SHA=$(cat ${CURR_DIR}/istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
-pushd ${CURR_DIR}/proxy
+export PROXY_REPO_SHA=$(cat ${ROOT}/istio.deps |grep "lastStableSHA" | cut -d '"' -f 4)
+pushd ${ROOT}/proxy
 git checkout $PROXY_REPO_SHA
 popd
 
